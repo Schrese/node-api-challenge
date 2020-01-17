@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-//GET all actions (get())
+//GET all actions by project id (get())
 
 
 //GET actions by id (get()) - takes in an id
