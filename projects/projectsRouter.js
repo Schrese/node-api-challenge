@@ -47,6 +47,21 @@ router.get('/:id', (req, res) => {
 
 
 //POST adds a project (insert()) - name and description are required bodies
+router.post('/', (req, res) => {
+    const newProj = req.body;
+    if(newProj.name.length === 0 || newProj.description.length === 0 ) {
+        res.status(400).json({ message: 'Please provide both name and description for this project' })
+    } else {
+        Projects.insert(newProj)
+            .then(newP => {
+                res.status(201).json({newP})
+            })
+            .catch(err => {
+                console.log('error creating a new project', err)
+                res.status(500).json({ errorMessage: 'Could not create a new project' })
+            })
+    }
+})
 
 
 //PUT updates a project (update()) - gets 2 args (id, changes)
