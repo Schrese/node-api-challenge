@@ -1,8 +1,9 @@
 const express = require('express');
 
 //routes
-const projectsRouter = require('./projects/projectsRouter.js');
-const actionsRouter = require('./actions/actionsRouter.js');
+// const projectsRouter = require('./projects/projectsRouter.js');
+// const actionsRouter = require('./actions/actionsRouter.js');
+const coreRouter = require('./api/apiRouter.js');
 
 const server = express();
 
@@ -14,8 +15,9 @@ server.get('/', (req, res) => {
     res.send(`<h2>Welcome to my Projects/Actions API</h2>`)
 })
 
-server.use('/api/projects', projectsRouter);
-server.use('/api/actions', actionsRouter);
+server.use('/api', coreRouter);
+// server.use('/projects', projectsRouter);
+// server.use('/actions', actionsRouter);
 
 //logs out from where and what request is coming in
 function logger (req, res, next) {

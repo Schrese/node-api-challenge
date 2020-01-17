@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Projects = require('../data/helpers/projectModel.js')
+const Actions = require('../data/helpers/actionModel.js')
 
 //GET all projects (get())
 router.get('/', (req, res) => {
@@ -32,18 +33,18 @@ router.get('/:id', validateId, (req, res) => {
 
 //GET project actions (getProjectActions()) - takes in PROJECT ID
 //this may need to go to actionsRouter
-// router.get('/:project_id', (req, res) => {
-//     const project_id = req.params.id;
+router.get('/:id/actions', validateId, (req, res) => {
+    const id = req.params.id;
 
-//     Projects.getProjectActions(project_id)
-//         .then(act => {
-//             res.status(200).json(proj)
-//         })
-//         .catch(err => {
-//             console.log('error getting actions from this id', err)
-//             res.status(500).json({ errorMessage: "The actions associated with that project id could not be found." })
-//         })
-// })
+    Projects.getProjectActions(id)
+        .then(act => {
+            res.status(200).json(act)
+        })
+        .catch(err => {
+            console.log('error getting actions from this id', err)
+            res.status(500).json({ errorMessage: "The actions associated with that project id could not be found." })
+        })
+})
 
 
 //POST adds a project (insert()) - name and description are required bodies
