@@ -73,6 +73,7 @@ router.put('/:id', (req, res) => {
     } else {
         Projects.update(id, updatedProj)
             .then(upDated => {
+                console.log(upDated)
                 res.status(200).json({ message: 'Project successfully updated!' })
             })
             .catch(err => {
@@ -83,6 +84,18 @@ router.put('/:id', (req, res) => {
 })
 
 //DELETE deletes a project (remove()) - takes in an id
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+
+    Projects.remove(id)
+        .then(deleted => {
+            res.status(200).json({ message: 'Project successfully removed!' })
+        })
+        .catch(err => {
+            console.log('error deleting project', err)
+            res.status(500).json({ errorMessage: 'The project could not be removed' })
+        })
+})
 
 
 module.exports = router;
