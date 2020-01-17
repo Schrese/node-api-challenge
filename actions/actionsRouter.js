@@ -33,22 +33,22 @@ router.get('/:id', validateActionId, (req, res) => {
 
 //POST adds an action (insert()) - description and notes required, completed is optional
 //Might need to put this into projectsRouter
-router.post('/', (req, res) => {
-    const newAct = req.body;
-    if (newAct.description.length === 0 || newAct.notes.length === 0) {
-        res.status(400).json({ message: 'Please provie notes and description for this Action' })
-    } else {
-        Projects.get(newAct.project_id)
-            Actions.insert(newAct)
-            .then(newA => {
-                res.status(201).json({newA})
-            })
-            .catch(err => {
-                console.log('error creating new action', err)
-                res.status(500).json({ errorMessage: 'Could not create a new Action' })
-            })
-    }
-})
+// router.post('/', (req, res) => {
+//     const newAct = req.body;
+//     if (newAct.description.length === 0 || newAct.notes.length === 0) {
+//         res.status(400).json({ message: 'Please provie notes and description for this Action' })
+//     } else {
+//         // Projects.get(newAct.project_id)
+//             Actions.insert(newAct)
+//             .then(newA => {
+//                 res.status(201).json({newA})
+//             })
+//             .catch(err => {
+//                 console.log('error creating new action', err)
+//                 res.status(500).json({ errorMessage: 'Could not create a new Action' })
+//             })
+//     }
+// })
 
 
 //PUT updates an action (update()) - gets 2 args (id, changes)

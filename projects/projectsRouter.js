@@ -98,6 +98,26 @@ router.delete('/:id', validateId, (req, res) => {
         })
 })
 
+//creates a new action on a project
+router.post('/:id/actions', validateId, (req, res) => {
+    const id = req.params.id;
+    const newAct = req.body;
+    const singleObj = {project_id: id, description: newAct.description, notes: newAct.notes}
+    if (newAct.description.length === 0 || newAct.notes.length === 0) {
+        res.status(400).json({ message: 'Please provie notes and description for this Action' })
+    } else {
+        // Projects.get(newAct.project_id)
+        Actions.insert(singleObj)
+            .then(newA => {
+                res.status(201).json({newA})
+            })
+            .catch(err => {
+                console.log('error creating new action', err)
+                res.status(500).json({ errorMessage: 'Could not create a new Action' })
+            })
+    }
+})
+
 //checks to see that the id is valid
 function validateId(req, res, next) {
     const id = req.params.id;
