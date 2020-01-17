@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 })
 
 //GET projects by id (get()) - takes in an id
-router.get('/:id', (req, res) => {
+router.get('/:id', validateId, (req, res) => {
     const id = req.params.id;
 
     Projects.get(id)
@@ -65,7 +65,7 @@ router.post('/', (req, res) => {
 
 
 //PUT updates a project (update()) - gets 2 args (id, changes)
-router.put('/:id', (req, res) => {
+router.put('/:id', validateId, (req, res) => {
     let id = req.params.id;
     let updatedProj = req.body;
     if (updatedProj.name.length === 0 || updatedProj.description.length === 0) {
@@ -84,7 +84,7 @@ router.put('/:id', (req, res) => {
 })
 
 //DELETE deletes a project (remove()) - takes in an id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateId, (req, res) => {
     const id = req.params.id;
 
     Projects.remove(id)
@@ -96,6 +96,24 @@ router.delete('/:id', (req, res) => {
             res.status(500).json({ errorMessage: 'The project could not be removed' })
         })
 })
+
+//checks to see that the id is valid
+function validateId(req, res, next) {
+    const id = req.params.id;
+    
+    Projects.get(id)
+        .then(theId => {
+            if (theId) {
+                next();
+            } else {
+                res.status(400).json({ message: 'Invalid project id' })
+            }
+        })
+        .catch(err => {
+            console.log('error getting this project by id', err)
+            res.status(500).json({ errorMessage: 'There was an error getting this project id' })
+        })
+}
 
 
 module.exports = router;
