@@ -1,3 +1,4 @@
+//Allows both projects and actions to be chained onto one another by having "/api" be in server
 const express = require('express');
 
 const router = express.Router();
