@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 })
 
 //GET actions by id (get()) - takes in an id
-router.get('/:id', (req, res) => {
+router.get('/:id', validateActionId, (req, res) => {
     const id = req.params.id;
     Actions.get(id)
         .then(act => {
@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
 
 
 //PUT updates an action (update()) - gets 2 args (id, changes)
-router.put('/:id', (req, res) => {
+router.put('/:id', validateActionId, (req, res) => {
     const id = req.params.id;
     const updatedAct = req.body;
     if (updatedAct.description.length === 0 || updatedAct.notes.length === 0) {
@@ -72,5 +72,35 @@ router.put('/:id', (req, res) => {
 })
 
 //DELETE removes an action by id (remove()) - takes in an id
+router.delete('/:id', validateActionId, (req, res) => {
+    const id = req.params.id;
+    Actions.remove(id)
+        .then(deleted => {
+            res.status(200).json({ message: 'Action successfully removed!' })
+        })
+        .catch(err => {
+            console.oog('error deleting action', err)
+            res.status(500).json({ errorMessage: 'The action could not be removed' })
+        })
+})
+
+//checks to see that the action id is valid
+function validateActionId(req, res, next) {
+    const id = req.params.id;
+
+    Actions.get(id)
+        .then(actId => {
+            if (actId) {
+                next();
+            } else {
+                res.status(400).json({ message: 'Invalid action id' })
+            }
+        })
+        .catch(err => {
+            console.log('error getting this action by id', err)
+            res.status(500).json({ errorMessage: 'There was an error getting this action id' })
+        })
+}
+
 
 module.exports = router;
