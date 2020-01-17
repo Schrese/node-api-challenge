@@ -40,13 +40,24 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+    1. That it has routers that function a lot like routing in react
+	2. Middleware. (I know it's the question below, but this week has made middleware make a bit more sense)
+
 - [ ] Describe Middleware?
+
+    In the most concise way I can put it right now, middleware is a set of functions that make our code to more than what the software originally meant? But I like to think of it as an array of functions that work (kindof) like redux did when we were doing that a few weeks ago. There are 3 types of middleware: Built-in middleware (comes with the software), Third-party middleware (created by other users of the software), and Custom middleware (what the developer creates themselves). I'm not really sure where to stop on this question, it still feels a bit vast for now. 
 
 - [ ] Describe a Resource?
 
+    A resource is basically the things our app cares about as far as what we want to manage in our apps. An easier way to think of it is as resources being the "nouns" for our app domains. So for something like chef portfolio, those would be things like: users, chefs, and recipes, to name a few. (although, with that said "everything is a resource")
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+    The API can return status codes to help clients know if a request was successful, but it can also help with when a request was unsuccessful, because if done properly, the client will be able to know what the issue is which will help them to solve it more quickly (possibly)
+
 - [ ] How can we partition our application into sub-applications?
+
+    By creating routes, or more specifically, URI's. Mainly centered around the "/api" endpoint/path. There can be multiple endpoints within here based on resources, and splitting them up through routing allows us to have sub-components.
 
 ## Minimum Viable Product
 
