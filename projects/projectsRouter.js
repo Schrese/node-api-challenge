@@ -65,7 +65,22 @@ router.post('/', (req, res) => {
 
 
 //PUT updates a project (update()) - gets 2 args (id, changes)
-
+router.put('/:id', (req, res) => {
+    let id = req.params.id;
+    let updatedProj = req.body;
+    if (updatedProj.name.length === 0 || updatedProj.description.length === 0) {
+        res.status(400).json({ message: 'Please provide both name and description for this project' })
+    } else {
+        Projects.update(id, updatedProj)
+            .then(upDated => {
+                res.status(200).json({ message: 'Project successfully updated!' })
+            })
+            .catch(err => {
+                console.log('error updating this project', err)
+                res.status(500).json({ errorMessage: 'The project could not be modified' })
+            })
+    }
+})
 
 //DELETE deletes a project (remove()) - takes in an id
 
